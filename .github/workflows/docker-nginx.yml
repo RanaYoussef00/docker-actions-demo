@@ -1,13 +1,10 @@
-name: Docker Nginx Build & Run
+name: Docker Nginx Build & Logs
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
-  build-and-run-nginx:
+  build-run-logs:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,11 +14,12 @@ jobs:
       - name: Build Docker image
         run: docker build -t nginx-demo .
 
-      - name: List Docker images
-        run: docker images
-
       - name: Run Nginx container
-        run: |
-          docker run -d -p 8080:80 --name nginx-demo-container nginx-demo
-          docker ps -a
+        run: docker run -d -p 8080:80 --name nginx-demo-container nginx-demo
+
+      - name: List running containers
+        run: docker ps
+
+      - name: Show container logs
+        run: docker logs nginx-demo-container
 
