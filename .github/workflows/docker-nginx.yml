@@ -1,0 +1,21 @@
+name: Docker Nginx Build
+
+on:
+  workflow_dispatch:   # يدوي
+  push:
+    branches:
+      - main          # أو أي فرع رئيسي
+
+jobs:
+  build-nginx:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t nginx-demo .
+
+      - name: List Docker images
+        run: docker images
